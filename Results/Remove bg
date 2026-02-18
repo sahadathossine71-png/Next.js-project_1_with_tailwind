@@ -1,0 +1,91 @@
+import React, { useState } from 'react';
+import { Upload, Download } from 'lucide-react';
+
+const BackgroundRemovalResult = () => {
+  // Mock state for the images
+  const [originalImage] = useState("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKE3C2fhVajWtolma7HccYS-kyf2P15opAxSpL6lmTZg&s=10");
+  const [resultImage] = useState("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKE3C2fhVajWtolma7HccYS-kyf2P15opAxSpL6lmTZg&s=10");
+
+  const handleTryAnother = () => {
+    // Navigate to upload page (Assuming the route is /upload)
+    window.location.href = "/upload";
+  };
+
+  const handleDownload = () => {
+    // Download logic placeholder
+    const link = document.createElement('a');
+    link.href = resultImage;
+    link.download = 'removed_bg.png';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  return (
+    <div className="min-h-screen bg-white p-4 font-sans">
+      {/* Header Section */}
+      <h1 className="flex justify-center items-center text-[4rem] md:text-[6rem] my-8 font-bold">
+        Remove 
+        <span className="bg-black text-white flex justify-center items-center gap-1 px-2 py-1 mx-2 rounded-[7px] text-[3rem] md:text-[5rem]">
+          BG
+        </span>
+      </h1>
+
+      {/* Images Container */}
+      <div className="flex flex-col md:flex-row justify-around items-center border-2 border-black min-h-[30vh] gap-5 p-5">
+        
+        {/* Before (Original) */}
+        <div className="border-2 border-black w-full md:w-[45%] min-h-[220px] text-center rounded-[11px] p-2.5">
+          <h3 className="bg-black text-white mb-2.5 text-2xl md:text-[2rem] rounded-[11px] border-2 border-black p-[9px]">
+            Before
+          </h3>
+          <div className="overflow-hidden transition-all duration-400 ease-in-out">
+            <img 
+              src={originalImage} 
+              alt="Original" 
+              className="max-w-full h-auto transition-transform duration-400 ease-in-out hover:scale-110"
+            />
+          </div>
+        </div>
+
+        {/* After (Result) */}
+        <div className="border-2 border-black w-full md:w-[45%] min-h-[220px] text-center rounded-[11px] p-2.5">
+          <h3 className="bg-[#55eaff] text-black mb-2.5 text-2xl md:text-[2rem] rounded-[11px] border-2 border-black p-[9px]">
+            After
+          </h3>
+          <div className="overflow-hidden transition-all duration-400 ease-in-out">
+            <img 
+              src={resultImage} 
+              alt="Removed Background" 
+              className="max-w-full h-auto transition-transform duration-400 ease-in-out hover:scale-110"
+            />
+          </div>
+        </div>
+
+      </div>
+
+      {/* Buttons Section */}
+      <div className="flex flex-col md:flex-row justify-end items-center gap-[15px] p-5 mt-4">
+        <button 
+          onClick={handleTryAnother}
+          className="flex justify-center items-center gap-2 bg-white border-2 border-black rounded-[21px] px-[25px] py-2.5 text-xl cursor-pointer w-full md:w-auto hover:bg-gray-100 transition-colors"
+        >
+          Try another
+          <Upload size={18} strokeWidth={2} />
+        </button>
+
+        <button 
+          onClick={handleDownload}
+          className="bg-black text-white border-none rounded-[21px] px-[25px] py-2.5 text-[22px] cursor-pointer w-full md:w-auto hover:shadow-[5px_10px_20px_rgba(0,0,0,0.3)] transition-all"
+        >
+          Download
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default function App() {
+  return <BackgroundRemovalResult />;
+}
+
